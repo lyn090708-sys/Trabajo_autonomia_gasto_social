@@ -123,7 +123,7 @@ A continuación se detallan los pasos para reproducir este trabajo en cualquier 
 
 #### **Clonar el repositorio**
 Este proyecto puede ejecutarse localmente o directamente en Google Colab.
-[![Abrir en Colab]([https://colab.research.google.com/drive/13GACpzMIHXTiXr7WO6GWleQognxrtqyR?authuser=4)]
+[![Abrir en Colab](https://colab.research.google.com/drive/13GACpzMIHXTiXr7WO6GWleQognxrtqyR?authuser=4)]
 
 ### Instalar librerías necesarias
 pip install pandas==2.2.2 numpy==1.26.4 matplotlib==3.8.3 seaborn==0.13.2 scikit-learn==1.5.0 statsmodels==0.14.1
