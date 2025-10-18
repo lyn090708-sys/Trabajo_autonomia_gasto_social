@@ -126,9 +126,9 @@ Descargue el proyecto desde GitHub con el siguiente comando:
 git clone git clone https://github.com/lyn090708-sys/Trabajo_autonomia_gasto_social.git
 cd Trabajo_autonomia_gasto_social
 
-# Instalar librerías necesarias
+### Instalar librerías necesarias
 pip install pandas==2.2.2 numpy==1.26.4 matplotlib==3.8.3 seaborn==0.13.2 scikit-learn==1.5.0 statsmodels==0.14.1
 
-# Abrir el notebook para ejecutar el análisis
+### Abrir el notebook para ejecutar el análisis
 jupyter notebook Trabajo_2.ipynb
 
