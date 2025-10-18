@@ -58,7 +58,77 @@ Los datos provienen de las bases abiertas del MEF:
 ## Relevancia del estudio
 Este trabajo constituye un **análisis exploratorio** de cómo se relacionan las fuentes de financiamiento municipal con la inversión social. Los resultados pueden servir como insumo para:  
 
-- Evaluar la eficacia del sistema de transferencias fiscales.  
+- Evaluar la eficacia del sistema de transferencias fiscales. 
 - Identificar municipios con **alta dependencia y baja inversión social**.  
-- Proponer lineamientos de política que fortalezcan la **descentralización fiscal** y la **capacidad de gestión local**, con miras a un gasto social más eficiente y sostenible.  
+- Proponer lineamientos de política que fortalezcan la **descentralización fiscal** y la **capacidad de gestión local**, con miras a un gasto social más eficiente y sostenible.
+
+## Análisis de Modelos 
+
+###  Objetivo del estudio
+
+El objetivo principal es **evaluar empíricamente** si una mayor **autonomía financiera** —medida como la proporción de ingresos propios sobre el total— se asocia con un **mayor gasto social**, y si una alta **dependencia de transferencias** puede generar desincentivos fiscales o distorsionar la asignación de recursos hacia sectores prioritarios como educación y salud.
+
+---
+
+### Variables principales
+
+| Variable | Descripción | Tipo |
+|-----------|--------------|------|
+| `ln_gasto_social` | Logaritmo natural del gasto social municipal. | Variable objetivo (target) |
+| `autonomia` | Proporción de ingresos propios sobre el total de ingresos municipales. | Independiente |
+| `autonomia2` | Término cuadrático de la autonomía (captura efectos no lineales). | Independiente |
+| `prop_transferencias` | Proporción de transferencias en los ingresos totales. | Independiente / control |
+
+Estas variables fueron derivadas a partir de datos del MEF y estandarizadas para permitir comparaciones temporales y entre gobiernos locales.
+
+---
+
+## Metodología y decisiones de modelado
+
+1. **Ingesta y limpieza de datos:**  
+   - Filtrado de gobiernos locales.  
+   - Normalización de nombres, códigos y periodos.  
+   - Construcción de indicadores de autonomía, transferencias y gasto social.  
+
+2. **Modelado supervisado:**  
+   - **Modelo 1 (OLS Simple):** relación lineal entre autonomía y gasto social.  
+   - **Modelo 2 (OLS Cuadrático):** incorpora un término no lineal (autonomía²) para capturar rendimientos decrecientes.  
+
+3. **Evaluación del desempeño:**  
+   - División del conjunto en entrenamiento (75%) y prueba (25%).  
+   - Validación cruzada **k-Fold (k=5)**.  
+   - Métrica de comparación: **Error Cuadrático Medio (MSE)** y desviación estándar.  
+
+4. **Interpretación de resultados:**  
+   - El modelo cuadrático reduce significativamente el error medio y mejora el ajuste.  
+   - Se evidencia una **relación no lineal** entre autonomía fiscal y gasto social, con rendimientos decrecientes a niveles altos de autonomía.  
+
+---
+
+### Resultados principales
+
+| Modelo | MSE Promedio (CV) | Desviación Estándar |
+|---------|--------------------|--------------------|
+| Baseline | 4.575 | 0.000 |
+| OLS Simple | 0.214 | 0.107 |
+| **OLS Cuadrático** | **0.0386** | **0.0443** |
+
+El modelo cuadrático presenta un mejor desempeño predictivo, reflejando que la relación entre autonomía fiscal y gasto social **no es lineal**, sino que existe un punto donde el efecto marginal de la autonomía comienza a disminuir.
+
+---
+
+### Instrucciones de ejecución
+
+A continuación se detallan los pasos para reproducir este trabajo en cualquier entorno local o en Google Colab.
+
+#### **Clonar el repositorio**
+Descargue el proyecto desde GitHub con el siguiente comando:
+git clone git clone https://github.com/lyn090708-sys/Trabajo_autonomia_gasto_social.git
+cd Trabajo_autonomia_gasto_social
+
+# Instalar librerías necesarias
+pip install pandas==2.2.2 numpy==1.26.4 matplotlib==3.8.3 seaborn==0.13.2 scikit-learn==1.5.0 statsmodels==0.14.1
+
+# Abrir el notebook para ejecutar el análisis
+jupyter notebook Trabajo_2.ipynb
 
