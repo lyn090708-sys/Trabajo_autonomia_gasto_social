@@ -185,7 +185,7 @@ Incluye:
 
 ---
 
-# 🤖 Modelado Predictivo (Ridge, Lasso, Random Forest, XGBoost)
+# Modelado Predictivo (Ridge, Lasso, Random Forest, XGBoost)
 
 Se utilizó un dataset **agregado por fecha** (promedio entre municipios) para capturar la dinámica nacional mensual del gasto social.
 
