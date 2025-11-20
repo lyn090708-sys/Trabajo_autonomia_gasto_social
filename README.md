@@ -117,6 +117,128 @@ El modelo cuadrático presenta un mejor desempeño predictivo, reflejando que la
 
 ---
 
+## **Actualización Metodológica y Modelado Avanzado (PCA + Machine Learning + Series de Tiempo)**
+
+Esta sección amplía el análisis del Trabajo 2 incorporando:
+
+- Ingeniería de variables fiscales
+- Análisis de Componentes Principales (PCA)
+- Modelos predictivos avanzados
+- Validación temporal (TimeSeriesSplit)
+- Análisis de importancia de variables
+
+---
+
+## Limpieza y estandarización adicional 
+
+- Eliminación de observaciones con `gasto_social = 0`  
+- Eliminación de observaciones con `autonomia = 0`  
+- Conversión uniforme de todas las columnas numéricas  
+- Construcción del índice temporal `fecha`  
+- Normalización fiscal por municipio  
+
+---
+
+## Construcción de indicadores (Trabajo 3)
+
+Se añadieron variables clave:
+
+- `autonomia2` — autonomía al cuadrado  
+- `autonomia_x_transferencias` — interacción autonomía-transferencias  
+- `dependencia_transferencias`  
+- `canon_prop_transferencias`  
+- `esfuerzo_tributario_relativo`  
+- `relacion_transf_propios`  
+- `prop_transferencias`  
+- `prop_propios`  
+- `lag1_ln_gasto` — rezago para capturar persistencia temporal
+
+Estas variables permiten analizar efectos no lineales, dependencia estructural, capacidad tributaria y dinámica del gasto.
+
+---
+
+## Análisis Descriptivo Avanzado
+
+Incluye:
+
+- Resumen estadístico de variables fiscales  
+- Matriz de correlaciones  
+- Serie temporal del gasto social agregado 2014–2019  
+
+**Hallazgo clave:** el gasto social muestra ciclos fuertes e inercia temporal, lo cual justifica el uso de rezagos en el modelado.
+
+---
+
+# PCA (Análisis de Componentes Principales)
+
+### **Resultados del PCA**
+
+- **PC1 explica ~48% de la varianza** — eje que contrapone dependencia de transferencias vs. autonomía y esfuerzo tributario.  
+- **PC2 explica ~28% de la varianza** — ligado a composición del canon y estructura de financiamiento.  
+- Los dos primeros componentes capturan **~76%** de la estructura fiscal.
+
+### **Interpretación del biplot**
+
+- Los municipios presentan estructuras fiscales heterogéneas.  
+- PC1 distingue municipios autónomos de los altamente dependientes.  
+- PC2 distingue según peso del canon y composición interna de ingresos.
+
+---
+
+# 🤖 Modelado Predictivo (Ridge, Lasso, Random Forest, XGBoost)
+
+Se utilizó un dataset **agregado por fecha** (promedio entre municipios) para capturar la dinámica nacional mensual del gasto social.
+
+### Validación temporal  
+Se empleó **TimeSeriesSplit (5 folds)**.
+
+---
+
+## Resultados de modelos (Trabajo 3)
+
+| Modelo | MSE | R² |
+|--------|-----|----|
+| RidgeCV | 0.327 | 0.348 |
+| LassoCV | 0.324 | 0.354 |
+| XGBoost | 0.368 | menor |
+| **Random Forest** | **0.244** | **mejor** |
+
+---
+
+## Predicción vs. Real (último fold)
+
+- La predicción del RF sigue la tendencia del gasto social.  
+- El modelo suaviza picos abruptos, pero captura la dinámica temporal.  
+- **MSE último fold ≈ 0.046**, **R² ≈ 0.27**.  
+- El gasto social depende fuertemente del gasto del mes previo.
+
+---
+
+## Importancia de variables
+
+### **Random Forest**
+- `lag1_ln_gasto` — dominante (>75%)  
+- `esfuerzo_tributario_relativo`  
+- `dependencia_transferencias`  
+
+### **XGBoost**
+- `lag1_ln_gasto` — dominante (~54%)  
+- luego: esfuerzo tributario y relación transferencias/propios  
+
+ **Conclusión clave:**  
+La dinámica temporal es el determinante principal; la estructura fiscal aporta información adicional pero menor.
+
+---
+
+# Conclusiones Generales
+
+- La autonomía financiera en Perú es baja y la dependencia de transferencias es estructural.  
+- El gasto social tiene alta persistencia temporal.  
+- Los municipios con mayor esfuerzo tributario tienden a invertir más en gasto social.  
+- Random Forest es el mejor modelo para predecir gasto social mensual.  
+- El análisis confirma que **fortalecer la recaudación local** podría mejorar la inversión social sostenida.
+
+
 ### Instrucciones de ejecución
 
 A continuación se detallan los pasos para reproducir este trabajo en cualquier entorno local o en Google Colab.
@@ -128,5 +250,5 @@ Descargue el proyecto desde GitHub con el siguiente comando: git clone git clone
 pip install pandas==2.2.2 numpy==1.26.4 matplotlib==3.8.3 seaborn==0.13.2 scikit-learn==1.5.0 statsmodels==0.14.1
 
 ### Abrir el notebook para ejecutar el análisis
-jupyter notebook Trabajo_2.ipynb
+jupyter notebook Trabajo_3.ipynb
 
