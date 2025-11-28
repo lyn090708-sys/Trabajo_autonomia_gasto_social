@@ -26,7 +26,7 @@ El estudio emplea información del Ministerio de Economía y Finanzas (MEF), inc
 - Información de estructura fiscal e ingresos propios.
 
 Se construyó un panel mensual por municipalidad y posteriormente una serie temporal agregada con el promedio nacional para identificar tendencias generales del gasto social.
-
+Link de la data: "https://drive.google.com/uc?id=14SzqUbYjGUqF8pJFM_RndMukbHimynr3"
 ---
 
 ## Metodología general
