@@ -1,4 +1,4 @@
-# Dependencias necesarias para ejecutar el Trabajo 2 - Modelos Supervisados (OLS)
+# Dependencias necesarias para ejecutar el Proyecto
 # Proyecto: Relación entre autonomía fiscal y gasto social en gobiernos locales del Perú
 
 pandas==2.2.2
@@ -7,3 +7,6 @@ matplotlib==3.8.3
 seaborn==0.13.2
 scikit-learn==1.5.0
 statsmodels==0.14.1
+xgboost==2.0.3
+networkx==3.2.1
+
